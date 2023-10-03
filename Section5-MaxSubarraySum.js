@@ -1,6 +1,6 @@
 function maxSubarraySum(arr, n) {
     if (n > arr.length || arr.length < 2) {
-        return "Invalid input";
+        return null;
     }
     let max = subarraySum(arr, n);
     let subSum = max;

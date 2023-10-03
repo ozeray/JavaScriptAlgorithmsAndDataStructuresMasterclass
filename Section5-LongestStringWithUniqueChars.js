@@ -1,36 +1,33 @@
-function longestStringWithUniqueChars1(str) {
+function longestStringWithUniqueChars(str) {
     if (str.length < 2) {
         return str;
     }
 
     let visited = {};
-    let longest = {};
-    let right = 0;
+    let longest = 0;
+    let left = 0;
+    let first = 0;
 
-    while (right < str.length) {
-        let rightChar = str.charAt(right);
-        if (!isAlphaNumeric(rightChar)) {
+    for (let right = 0; right < str.length; right++) {
+        let char = str[right];
+        if (!isAlphaNumeric(char)) {
             return "Non-alphaNumeric character found";
         }
 
-        if (visited[rightChar] === undefined) {
-            visited[rightChar] = right;
-            if (Object.keys(visited).length > Object.keys(longest).length) {
-                longest = visited;
+        if (visited[char] === undefined || visited[char] < left) {
+            if (right - left + 1 > longest) {
+                longest = right - left + 1;
+                first = left;
             }
         } else {
-            let left = visited[rightChar] + 1;
-            visited = {}
-            let leftChar = str.charAt(left);
-            visited[leftChar] = left;
-            visited[rightChar] = right;
+            left = visited[char] + 1;
         }
-        right++;
+        visited[char] = right;
     }
-    return Object.keys(longest).join("");
+    return str.slice(first, longest + first);
 }
 
-function longestStringWithUniqueChars(str) {
+function longestStringWithUniqueChars2(str) {
     if (str.length < 2) {
         return str;
     }
