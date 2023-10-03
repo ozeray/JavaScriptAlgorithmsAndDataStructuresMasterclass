@@ -9,7 +9,10 @@ function isSubsequence1(str1, str2) {
         if (second === str2.length) return false;
 
         if (str2[second] !== str1[first]) second++;
-        else first++;
+        else {
+            first++;
+            second++;
+        };
     }
 
     return true;
@@ -31,6 +34,7 @@ function isSubsequence(str1, str2) {
     return false;
 }
 
+// Doesn't work for empty str1!
 function isSubsequence_Recursive(str1, str2) {
     if (str1.length === 0) return true
     if (str2.length === 0) return false
@@ -41,5 +45,6 @@ function isSubsequence_Recursive(str1, str2) {
 console.log(isSubsequence('hello', 'hello world')); // true
 console.log(isSubsequence('sing', 'sting')); // true
 console.log(isSubsequence('abc', 'abracadabra')); // true
+console.log(isSubsequence('acca', 'abracadabra')); // false
 console.log(isSubsequence('', 'abracadabra')); // false
 console.log(isSubsequence('abc', 'acb')); // false (order matters)
