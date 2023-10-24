@@ -6,7 +6,7 @@ function findLongestSubstring(str) {
     for (let j = 0; j < str.length; j++) {
         const char = str[j];
 
-        if (visited[char] == undefined || visited[char] < first) {
+        if (visited[char] === undefined || visited[char] < first) {
             longestLength = Math.max(longestLength, j - first + 1);
         } else {
             first = visited[char] + 1;
