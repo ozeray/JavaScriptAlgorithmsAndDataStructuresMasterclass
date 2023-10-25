@@ -3,7 +3,7 @@ function mergeArraysSorted(arr1, arr2) {
     let i = 0;
     let j = 0;
 
-    while(i < arr1.length && j < arr2.length) {
+    while (i < arr1.length && j < arr2.length) {
         if (arr1[i] < arr2[j])
             arr.push(arr1[i++]);
         else
@@ -14,22 +14,63 @@ function mergeArraysSorted(arr1, arr2) {
     return arr;
 }
 
+function splitRecursive(arr) {
+    let result = []
 
-// console.log(mergeArraysSorted([-1,1], [0,6]));
-// console.log(mergeArraysSorted([-1,1], [2,3]));
-// console.log(mergeArraysSorted([1,5], [4]));
-// console.log(mergeArraysSorted([], [1,1]));
-// console.log(mergeArraysSorted([1,1], []));
-// console.log(mergeArraysSorted([], [1,2]));
-// console.log(mergeArraysSorted([-2], [1,2]));
-// console.log(mergeArraysSorted([-2,1], [2]));
+    function split(arr) {
+        if (arr.length > 1) {
+            split(arr.slice(0, arr.length / 2));
+            split(arr.slice(arr.length / 2));
+        } else {
+            result.push(arr);
+        }
+    }
 
-function splitArray(arr) {
-    let arr1 = arr.slice(0, arr.length / 2);
-    let arr2 = arr.slice(arr.length / 2, arr.length);
-    return [arr1, arr2];
+    split(arr);
+    return result;
 }
 
-// console.log(splitArray([-1, 1]));
-// console.log(splitArray([-1, 1, 2]));
-// console.log(splitArray([-1, 1, 2, 4]));
+function mergeSort(arr) {
+    let start = performance.now();
+
+    let split = splitRecursive(arr);
+
+    function merge(split) {
+        if (split.length === 2) {
+            return mergeArraysSorted(split[0], split[1])
+        } else {
+            let sorted = [];
+            for (let i = 0; i < split.length; i = i + 2) {
+                sorted.push(mergeArraysSorted(split[i], i + 1 === split.length ? [] : split[i + 1]));
+            }
+            return merge(sorted);
+        }
+    }
+
+    let result = merge(split);
+    console.log(result);
+    console.log(performance.now() - start);
+}
+
+// mergeSort([1, -1]);
+// mergeSort([3, 1, 2]);
+mergeSort([-1, 4, 2, 1, -2, 7, 15, 267, -56, 0, 8, 12]);
+
+function mergeSort_Tutorial(arr) {
+    if (arr.length <= 1) return arr;
+    let mid = Math.floor(arr.length / 2);
+    let left = mergeSort_Tutorial(arr.slice(0, mid));
+    let right = mergeSort_Tutorial(arr.slice(mid));
+    return mergeArraysSorted(left, right);
+}
+
+function mergeSort_Wrapper(arr) {
+    let start = performance.now();
+    console.log(mergeSort_Tutorial([-1, 4, 2, 1, -2, 7, 15, 267, -56, 0, 8, 12]));
+    console.log(performance.now() - start);
+}
+
+mergeSort_Wrapper([-1, 4, 2, 1, -2, 7]);
+
+// console.log(mergeSort_Tutorial([1, -1]));
+// console.log(mergeSort_Tutorial([3, 1, 2]));
