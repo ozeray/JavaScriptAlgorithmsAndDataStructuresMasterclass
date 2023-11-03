@@ -16,7 +16,7 @@ class DoubleLinkedList {
     }
 
     push(value) {
-        let newNode = new Node(val);
+        let newNode = new Node(value);
         if (!this.head) {
             this.head = newNode;
             this.tail = this.head;
@@ -62,7 +62,7 @@ class DoubleLinkedList {
     }
 
     unshift(value) {
-        let newNode = new Node(val);
+        let newNode = new Node(value);
         if (!this.head) {
             this.head = newNode;
             this.tail = this.head;
@@ -77,12 +77,34 @@ class DoubleLinkedList {
 
     get(index) {
         if (index < 0 || index >= this.length) return null;
-        let counter = 0;
-        let current = this.head;
-        while (counter !== index) {
-            current = current.next;
-            counter++;
+        let counter, currentNode;
+        if (index < this.length > 2) {
+            counter = 0;
+            currentNode = this.head;
+            while (counter !== index) {
+                currentNode = currentNode.next;
+                counter++;
+            }
+        } else {
+            counter = this.length - 1;
+            currentNode = this.tail;
+            while (counter !== index) {
+                currentNode = currentNode.previous;
+                counter--;
+            }
         }
-        return current;
+
+        return currentNode;
     }
 }
+
+let dll = new DoubleLinkedList();
+dll.push(3);
+dll.push(4);
+dll.push(5);
+dll.push(6);
+console.log(dll.pop());
+console.log(dll.shift());
+console.log(dll.unshift(2));
+console.log(dll.get(1));
+console.log(dll.get(2));
