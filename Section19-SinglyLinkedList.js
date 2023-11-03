@@ -1,4 +1,5 @@
-// Head, tail + length
+// Head, tail, next, length
+// Unidirectional
 // Nodes with values and pointers to other nodes
 // No indexes, no random access.
 
